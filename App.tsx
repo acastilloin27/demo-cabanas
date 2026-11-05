@@ -126,9 +126,7 @@ const destinations = [
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [favorites, setFavorites] = useState<number[]>(() => {
-    try { const saved = JSON.parse(localStorage.getItem('refugios-favorites') || '[]'); return Array.isArray(saved) ? saved.filter(Number.isInteger) : [] } catch { return [] }
-  })
+  const [favorites, setFavorites] = useState<number[]>([])
   const [destination, setDestination] = useState("")
   const [guests, setGuests] = useState(1)
   const [arrival, setArrival] = useState('')
@@ -140,17 +138,12 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [searchError, setSearchError] = useState('')
-  const [notice, setNotice] = useState('')
   const [savedOnly, setSavedOnly] = useState(false)
   const [sort, setSort] = useState('recommended')
   const [revision, setRevision] = useState(0)
   const [selectedStay, setSelectedStay] = useState<Stay | null>(null)
   const [panel, setPanel] = useState<'reservations' | 'host' | 'help' | null>(null)
   const categories = ["Todos", "Bosque", "Montaña", "Lago"]
-
-  useEffect(() => {
-    try { localStorage.setItem('refugios-favorites', JSON.stringify(favorites)) } catch { setNotice('Tu navegador no permite guardar favoritos de forma permanente.') }
-  }, [favorites])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -372,7 +365,7 @@ export default function App() {
           </form>
           <datalist id="destination-options">{['Pucón', 'Cajón del Maipo', 'Frutillar', 'Sur de Chile', 'Cordillera', 'Bosques nativos'].map(value => <option key={value} value={value} />)}</datalist>
           {searchError && <p role="alert" className="mt-3 rounded-2xl bg-white px-5 py-3 text-sm text-[#a3442d]">{searchError}</p>}
-          <p className="mt-4 text-xs text-white/80">Demo funcional · Alojamientos ilustrativos · Reservas sin cobros reales</p>
+          <p className="mt-4 text-xs text-white/80">Demo interactiva · Sin cobros reales · Se reinicia al recargar</p>
         </div>
       </section>
 
@@ -672,7 +665,6 @@ export default function App() {
           <p>Hecho para quienes aman estar afuera.</p>
         </div>
       </footer>
-      {notice && <div role="status" className="toast"><span>{notice}</span><button onClick={() => setNotice('')} aria-label="Cerrar aviso">✕</button></div>}
       {selectedStay && <StayDetail stay={selectedStay} filters={filters} onClose={() => setSelectedStay(null)} onBooked={() => setRevision(value => value + 1)} />}
       {panel === 'reservations' && <Reservations onClose={() => setPanel(null)} onChanged={() => setRevision(value => value + 1)} />}
       {panel === 'host' && <HostForm onClose={() => setPanel(null)} onCreated={() => { resetFilters(); setRevision(value => value + 1); scrollToStays() }} />}

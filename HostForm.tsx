@@ -20,7 +20,7 @@ export default function HostForm({ onClose, onCreated }: { onClose: () => void; 
   return <Dialog title="Publica tu cabaña" onClose={onClose}>
     {created ? <><div className="confirmation-icon" aria-hidden="true">✓</div><h2 className="dialog-heading">Tu refugio ya está aquí.</h2><p className="muted my-5">«{created.name}» está publicado en el catálogo de esta demo y disponible para reservas.</p><button className="primary-button" onClick={onClose}>Ver alojamientos</button></> : <>
       <h2 className="dialog-heading">Comparte tu rincón favorito.</h2>
-      <p className="demo-note mt-3 mb-6">Publicación de demostración, visible en este servidor local. No se envía a una plataforma real.</p>
+      <p className="demo-note mt-3 mb-6">Prueba cómo se vería tu cabaña. Solo aparecerá durante esta visita y se eliminará al recargar.</p>
       <form className="stacked-form" onSubmit={submit}>
         <label>Nombre de la cabaña<input name="name" required minLength={3} maxLength={80} placeholder="Ej. Refugio del lago" /></label>
         <label>Ciudad y región<input name="location" required minLength={3} maxLength={100} placeholder="Ej. Villarrica, Araucanía" /></label>

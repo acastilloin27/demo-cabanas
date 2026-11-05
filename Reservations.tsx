@@ -27,7 +27,7 @@ export default function Reservations({ onClose, onChanged }: { onClose: () => vo
   }
   return <Dialog title="Mis reservas" onClose={onClose} wide>
     <h2 className="dialog-heading">Tus próximas historias.</h2>
-    <p className="muted mt-3 mb-6">Reservas de demostración realizadas desde este navegador. Conserva sus cookies para poder gestionarlas.</p>
+    <p className="muted mt-3 mb-6">Reservas simuladas durante esta visita. Se reinician al recargar la página.</p>
     {error && <div className="form-error" role="alert">{error} <button className="underline" onClick={() => setRetry(value => value + 1)}>Reintentar</button></div>}
     {loading ? <p role="status">Cargando reservas…</p> : bookings.length === 0 && !error ? <div className="empty-state"><h3>Aún no tienes una escapada.</h3><p>Elige una cabaña y reserva tus fechas favoritas.</p><button className="primary-button mt-5" onClick={onClose}>Explorar cabañas</button></div> : <div className="booking-list">{bookings.map(booking => <article key={booking.id} className="booking-card">
       <img src={booking.stay.image} alt="" />

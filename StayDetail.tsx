@@ -34,14 +34,14 @@ export default function StayDetail({ stay, filters, onClose, onBooked }: { stay:
   if (booking) return <Dialog title="Reserva confirmada" onClose={onClose}>
     <div className="confirmation-icon" aria-hidden="true">✓</div>
     <h2 className="dialog-heading" tabIndex={-1}>Tu escapada está lista.</h2>
-    <p className="muted mt-3">Guardamos tu reserva de demostración. Puedes verla y cancelarla en «Mis reservas» desde este navegador.</p>
+    <p className="muted mt-3">Simulaste una reserva. Puedes verla y cancelarla en «Mis reservas» durante esta visita.</p>
     <div className="summary-box my-6">
       <strong>{stay.name}</strong><p className="muted">{stay.location}</p>
       <p className="mt-3">{formatDate(booking.arrival)} → {formatDate(booking.departure)}</p>
       <p>{booking.guests} huéspedes · {money(booking.total)} CLP</p>
       <p className="mt-3 text-sm break-all">Referencia: {booking.id}</p>
     </div>
-    <p className="demo-note mb-5">Demo local: sin cobro ni correo de confirmación. Los datos se conservan en este servidor.</p>
+    <p className="demo-note mb-5">No hay cobros ni correos reales. Esta simulación se reinicia al recargar la página.</p>
     <div className="flex flex-wrap gap-3"><button className="primary-button" onClick={() => downloadReceipt(booking)}>Descargar comprobante</button><button className="secondary-button" onClick={onClose}>Seguir explorando</button></div>
   </Dialog>
 
@@ -70,7 +70,7 @@ export default function StayDetail({ stay, filters, onClose, onBooked }: { stay:
         {nights > 0 && <div className="price-breakdown" aria-live="polite"><div><span>{money(stay.price)} × {nights} {nights === 1 ? 'noche' : 'noches'}</span><span>{money(nights * stay.price)}</span></div><div><span>Cargos adicionales</span><span>$0</span></div><div className="total"><strong>Total CLP</strong><strong>{money(nights * stay.price)}</strong></div></div>}
         {error && <p className="form-error" role="alert">{error}</p>}
         <button className="primary-button w-full" disabled={busy}>{busy ? 'Confirmando…' : 'Confirmar reserva de demo'}</button>
-        <p className="muted mt-3 text-xs">La disponibilidad se verifica al confirmar. La reserva queda asociada a este navegador.</p>
+        <p className="muted mt-3 text-xs">La disponibilidad es simulada. La reserva se mantiene solo hasta que recargues la página.</p>
       </form>
     </div>
   </Dialog>

@@ -1,6 +1,6 @@
 # Refugios · Demo funcional de cabañas
 
-La interfaz original ahora incluye una aplicación React con API Node y base de datos SQLite. Requiere **Node 24.14 o superior dentro de la versión 24** y npm.
+Demo interactiva en React y Vite, preparada para alojamiento estático en Vercel. No necesita API, base de datos, variables de entorno ni servicios externos para las interacciones. Usa Node 24 y npm para desarrollar y compilar.
 
 ## Ejecutar en desarrollo
 
@@ -9,27 +9,25 @@ npm install
 npm run dev
 ```
 
-Abre **http://127.0.0.1:5175**. El comando inicia Vite y la API en el puerto 3015. Si alguno de esos puertos está ocupado, detén el otro proceso antes de iniciar.
+Abre **http://127.0.0.1:5175**.
 
 ## Funcionalidades
 
 - Buscar por nombre, destino o zona, fechas disponibles y cantidad exacta de huéspedes; búsqueda sin distinción de acentos.
-- Filtrar por paisaje, ordenar por precio y guardar favoritos entre recargas del navegador.
+- Filtrar por paisaje, ordenar por precio y marcar favoritos durante la visita.
 - Consultar el detalle del alojamiento, sus servicios, capacidad y precio.
-- Reservar entre 1 y 30 noches con total calculado en el servidor y bloqueo de fechas superpuestas.
+- Simular reservas entre 1 y 30 noches con cálculo del total y bloqueo de fechas superpuestas en esta visita.
 - Ver y cancelar las reservas de este navegador, y descargar su comprobante de demostración.
-- Publicar nuevas cabañas en el catálogo local y reservarlas.
+- Probar la publicación de cabañas y reservarlas en el catálogo de esta visita.
 - Navegación móvil, estados de carga, errores y ayuda.
 
-Los tres alojamientos iniciales, sus opiniones y testimonios son ilustrativos. **No se procesan pagos ni se envían correos reales.** Las nuevas publicaciones aparecen de inmediato, sin revisión. Esta versión está pensada para demostrar el flujo local, no para recibir reservas comerciales.
+Los alojamientos, las opiniones y los testimonios son ilustrativos. **No se procesan pagos ni se envían correos reales.** Esta versión permite mostrar los flujos de la web sin recibir reservas comerciales.
 
 ## Datos
 
-La base se crea automáticamente en `data/refugios.sqlite`. Las reservas y publicaciones sobreviven al reinicio del servidor. No se debe subir esta carpeta a Git.
+Los favoritos, las reservas y las publicaciones existen únicamente en la memoria de la página. **Todo se reinicia al recargar.** No se usan cookies, almacenamiento local ni base de datos. Cada visitante tiene su propia simulación y los datos de los formularios no se envían a un servidor.
 
-Las reservas se vinculan a una cookie HttpOnly de este navegador; no hay cuentas de usuario. Borrar cookies o cambiar de navegador impide consultar esas reservas. Los favoritos usan `localStorage`. Los bloqueos de fechas se comparten entre todos los navegadores conectados al mismo servidor.
-
-Puedes copiar `.env.example` a `.env` para configurar `PORT`, `HOST` o `DATA_FILE`. El servidor de desarrollo usa los puertos fijos indicados arriba. Las imágenes y fuentes necesitan conexión a Internet.
+Las fotografías y fuentes se cargan de Unsplash y Google Fonts y requieren conexión a Internet. El comprobante solo se descarga si lo solicitas.
 
 ## Compilar y ejecutar la versión compilada
 
@@ -38,12 +36,20 @@ npm run build
 npm start
 ```
 
-Abre **http://127.0.0.1:3015**. Un único servidor sirve la web compilada y la API. Para alojarla se requiere Node 24 con un disco persistente para SQLite; un hosting de archivos estáticos no ejecuta la API. No se ha desplegado esta demo.
+Abre **http://127.0.0.1:3015** para previsualizar la carpeta `dist`.
+
+## Vercel
+
+Sitio: **https://demo-cabanas-inky.vercel.app/**.
+
+Conecta el repositorio `acastilloin27/demo-cabanas`, rama `main`, con preset **Vite**, comando de compilación `npm run build` y salida `dist`. `vercel.json` declara esa configuración. No necesitas configurar Supabase ni rutas `/api`.
+
+## Pruebas
 
 ```sh
 npm test
 ```
 
-Las pruebas usan bases aisladas y cubren búsqueda, validación, importes, colisiones de fechas, privacidad por sesión, cancelación, publicaciones y persistencia.
+Las pruebas cubren búsqueda, validación, cálculo del total, colisiones de fechas, cancelación, publicaciones y reinicio de la simulación.
 
-Para uso comercial faltaría integrar autenticación de viajeros y anfitriones, aprobación y gestión de anuncios, pagos, notificaciones y una configuración de producción con HTTPS, copias de seguridad y controles de acceso.
+Es una demo de presentación. Para convertirla en un servicio de reservas se necesitaría un backend con persistencia y servicios reales.
